@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nucleus-qc"
+version = "1.0.0"
+description = "Nucleus-level quality control of Cellpose-SAM segmentations on H&E"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.9"
+dependencies = [
+    "torch>=2.0",
+    "torchvision>=0.15",
+    "numpy",
+    "scipy",
+    "scikit-image",
+    "opencv-python-headless",
+    "imageio",
+    "tifffile",
+]
+
+[project.optional-dependencies]
+cellpose = ["cellpose>=4"]
+
+[project.scripts]
+nucleus-qc = "nucleus_qc.predict:main"
+nucleus-qc-export = "nucleus_qc.export:main"
+nucleus-qc-train = "nucleus_qc.train:main"
+
+[tool.setuptools]
+packages = ["nucleus_qc"]
