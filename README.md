@@ -42,7 +42,7 @@ pip install git+https://github.com/ksong45/nucleus-qc
 pip install "nucleus-qc[cellpose] @ git+https://github.com/ksong45/nucleus-qc"
 ```
 
-The pretrained models (three files, ~95 MB each) download automatically on
+The pretrained models (three files, ~90 MB each) download automatically on
 first use to `~/.cache/nucleus_qc` (change with `NUCLEUS_QC_WEIGHTS`). A GPU is
 recommended but not required.
 
@@ -94,6 +94,11 @@ re-threshold later without rerunning.
   data. Other magnifications should be resampled to ≈0.23 µm/pixel first.
 * Masks from **Cellpose-SAM** (`cpsam`, Cellpose ≥ 4) with default parameters.
   Masks from other segmenters may work but were not evaluated.
+* Any tile size works: each nucleus is cropped and resized on its own, so
+  the tile size does not affect the result (the training tiles were
+  4096 × 4096). Whole-slide images should be split into tiles first. Nuclei
+  cut off by the tile edge are flagged as border errors, so larger tiles
+  lose fewer nuclei to the edge.
 * As in the paper, pixels outside the region of interest may be set to zero;
   nuclei cut by that boundary are flagged as border errors.
 
@@ -129,7 +134,8 @@ python -m tests.test_views
 
 If you use this software, please cite:
 
-> K. Song, N. S. Pathan, M. Shifat-E-Rabbi, A. Murthy, and G. K. Rohde,
+> K. Song, N. S. Pathan, M. Shifat-E-Rabbi, A. Murthy, J. C. Garneau,
+> D. Gioeli, and G. K. Rohde,
 > "Automated nucleus-level quality control of Cellpose segmentations in H&E
 > oral cancer tissue," submitted to *IEEE International Symposium on
 > Biomedical Imaging (ISBI)*, 2027.
